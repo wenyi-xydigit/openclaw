@@ -8,7 +8,7 @@ import { normalizeOptionalString } from "@openclaw/normalization-core/string-coe
 import type { AgentContextInjection } from "../config/types.agent-defaults.js";
 import type { OpenClawConfig } from "../config/types.openclaw.js";
 import { resolveUserPath } from "../utils.js";
-import { resolveAgentConfig, resolveSessionAgentIds } from "./agent-scope.js";
+import { resolveAgentConfig, resolveAgentDir, resolveSessionAgentIds } from "./agent-scope.js";
 import { getOrLoadBootstrapFiles } from "./bootstrap-cache.js";
 import { applyBootstrapHookOverrides } from "./bootstrap-hooks.js";
 import type { EmbeddedContextFile } from "./embedded-agent-helpers.js";
@@ -331,7 +331,6 @@ export async function resolveBootstrapFilesForRun(params: {
 
   // Check for bootstrap files in agentDir and warn if they won't be loaded
   if (params.config && params.agentId && params.warn) {
-    const { resolveAgentDir } = await import("./agent-scope.js");
     const agentDir = resolveAgentDir(params.config, params.agentId);
     if (agentDir) {
       await checkAgentDirBootstrapFiles({
